@@ -8,4 +8,4 @@ Foram feitos dois acessos, uma recolhendo dados em XML e outra com CSV.
 
 ## Tarefa 2 sobre Engenharia Reversa
 
-<img src="./images/datasets.png" style="width:1000px">
+<img src="./images/datasets.png" style="width:1200px">
