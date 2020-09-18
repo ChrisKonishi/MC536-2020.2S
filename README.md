@@ -1,1 +1,2 @@
-# MC536-2020.2S
+# Aluno
+- Christian Massao Konishi
