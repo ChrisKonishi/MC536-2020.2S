@@ -4,7 +4,7 @@
 
 Foram feitos dois acessos, uma recolhendo dados em XML e outra com CSV.
 
-[Link para Notebook](link)
+[Link para Notebook](./notebook/data-api-python.ipynb)
 
 ## Tarefa 2 sobre Engenharia Reversa
 
