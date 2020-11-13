@@ -30,3 +30,17 @@ MATCH((:Drug {name:"Dipyrone"})-[s:SameAs]->(:Drug {name:"Metamizole"}))
 DELETE r
 DELETE s
 ```
+
+## Exercício
+
+Faça a projeção em relação a Patologia, ou seja, conecte patologias que são tratadas pela mesma droga.
+
+### Resolução
+
+```
+MATCH (p1:Pathology)<-[a]-(d:Drug)-[b]->(p2:Pathology)
+WHERE a.weight > 20 AND b.weight > 20
+MERGE (p1)<-[r:PathoRelates]->(p2)
+ON CREATE SET r.weight=1
+ON MATCH SET r.weight=r.weight+1
+```
