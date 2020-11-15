@@ -1,4 +1,6 @@
-## Exercício
+# Modelo para Apresentação do Lab06 - Cypher e FAERS
+
+## Exercício 1
 
 Escreva uma sentença em Cypher que crie o medicamento de nome Metamizole, código no DrugBank DB04817.
 
@@ -8,30 +10,28 @@ Escreva uma sentença em Cypher que crie o medicamento de nome Metamizole, códi
 CREATE (:Drug {drugbank: "DB04817", name:"Metamizole"})
 ```
 
-## Exercício
+## Exercício 2
 
 Considerando que a Dipyrone e Metamizole são o mesmo medicamento com nomes diferentes, crie uma aresta com o rótulo :SameAs que ligue os dois.
 
 ### Resolução
 
 ```
-MATCH (p:Drug {name:"Metamizole"}) MATCH (d:Drug {name:"Dipyrone"}) CREATE (p)-[:SameAs]->(d) CREATE (d)-[:SameAs]->(p)
+MATCH (p:Drug {name:"Metamizole"}) MATCH (d:Drug {name:"Dipyrone"}) CREATE (p)-[:SameAs]-(d)
 ```
 
-## Exercício
+## Exercício 3
 
 Use o DELETE para excluir o relacionamento que você criou (apenas ele).
 
 ### Resolução
 
 ```
-MATCH((:Drug {name:"Metamizole"})-[r:SameAs]->(:Drug {name:"Dipyrone"}))
-MATCH((:Drug {name:"Dipyrone"})-[s:SameAs]->(:Drug {name:"Metamizole"}))
+MATCH((:Drug {name:"Metamizole"})-[r:SameAs]-(:Drug {name:"Dipyrone"}))
 DELETE r
-DELETE s
 ```
 
-## Exercício
+## Exercício 4
 
 Faça a projeção em relação a Patologia, ou seja, conecte patologias que são tratadas pela mesma droga.
 
@@ -45,7 +45,7 @@ ON CREATE SET r.weight=1
 ON MATCH SET r.weight=r.weight+1
 ```
 
-## Exercício
+## Exercício 5
 
 Construa um grafo ligando os medicamentos aos efeitos colaterais (com pesos associados) a partir dos registros das pessoas, ou seja, se uma pessoa usa um medicamento e ela teve um efeito colateral, o medicamento deve ser ligado ao efeito colateral.
 
@@ -89,7 +89,7 @@ limit 50;
 ```
 
 
-## Exercício
+## Exercício 6
 
 Que tipo de análise interessante pode ser feita com esse grafo?
 
@@ -97,7 +97,7 @@ Proponha um tipo de análise e escreva uma sentença em Cypher que realize a an�
 
 ## Resolução
 
-Alguns efeitos colaterais podem estar associados ao uso de duas drogas, irei associair as drogas entre si, se ambas forem conectadas a um efeito colateral
+Alguns efeitos colaterais podem ser causados por múltiplas drogas. Irei associar as drogas que causam o mesmo efeito colateral, pois isso permite uma análise reversa: dado um paciente com tais sintomas, que drogas ele(a) pode ter tomado?
 
 ```
 MATCH (d1:Drug)-[c1:causa]->(p:Pathology)<-[c2:causa]-(d2:Drug)
