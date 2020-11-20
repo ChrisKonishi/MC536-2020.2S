@@ -1,4 +1,6 @@
-# Modelo para Apresentação do Lab06 - Cypher e FAERS
+# Apresentação do Lab06 - Cypher e FAERS
+
+## Tarefa de Cypher e o FDA Adverse Event Reporting System (FAERS)
 
 ## Exercício 1
 
