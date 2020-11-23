@@ -14,7 +14,7 @@ DELETE N;
 LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/santanche/lab2learn/master/network/pagerank/pagerank-wikipedia.csv' AS line
 MERGE (p1:Page {name:line.source})
 MERGE (p2:Page {name:line.target})
-CREATE (p1)-[:LINKS]->(p2);
+MERGE (p1)-[:LINKS]->(p2);
 
 CALL gds.graph.create(
   'prGraph',
