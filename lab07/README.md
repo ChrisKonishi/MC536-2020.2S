@@ -1,9 +1,10 @@
+# Lab07 - Análise de Redes
 
-## Exercise - Wikipedia Example
+## Tarefa de análises feitas no Cypher
 
-Compute the Pagerank of the Wikipedia example in Cypher:
+## Exercício 1
 
-### Solução
+Calcule o Pagerank do exemplo da Wikipedia em Cypher:
 
 ```
 MATCH ()-[E]-()
@@ -33,44 +34,10 @@ MATCH (p:Page {name: gds.util.asNode(nodeId).name})
 SET p.pagerank = score
 ```
 
-## Exercise - FAERS & DRON
+## Exercício 2
 
-Departing from a Drug-Drug graph created in a previous lab, whose relationship determines drugs taken together, apply a community detection in it to see the results.
+Departing from a Drug-Drug graph created in a previous lab, whose relationship determines drugs taken together, apply a community detection in it to see the results:
 
-Apply this community with and without weights.
-
-Sequence to build the graph:
-
-```
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/santanche/lab2learn/master/data/faers-2017/drug.csv' AS line
-CREATE (:Drug {code: line.code, name: line.name});
-CREATE INDEX ON :Drug(code);
-
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/santanche/lab2learn/master/data/faers-2017/pathology.csv' AS line
-CREATE (:Pathology { code: line.code, name: line.name});
-CREATE INDEX ON :Pathology(code);
-
-LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/santanche/lab2learn/master/data/faers-2017/drug-use.csv' AS line
-MATCH (d:Drug {code: line.codedrug})
-MATCH (p:Pathology {code: line.codepathology})
-MERGE (d)-[t:Treats]->(p)
-ON CREATE SET t.weight=1
-ON MATCH SET t.weight=t.weight+1;
-
-MATCH (d1:Drug)-[a]->(p:Pathology)<-[b]-(d2:Drug)
-WHERE a.weight > 20 AND b.weight > 20
-MERGE (d1)<-[r:Relates]->(d2)
-ON CREATE SET r.weight=1
-ON MATCH SET r.weight=r.weight+1;
-
-
-MATCH (d1:Drug)<-[:Relates]->(d2:Drug)
-RETURN d1, d2
-LIMIT 20;
-
-```
-
-### Solução
 ```
 CALL gds.graph.create(
   'drugGraph',
